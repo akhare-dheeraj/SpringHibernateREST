@@ -1,0 +1,10 @@
+com\demo\beans\BaseBean.class
+com\demo\beans\Subject.class
+com\demo\dao\BaseDao.class
+com\demo\beans\College.class
+com\demo\beans\Student.class
+com\demo\beans\Address.class
+com\demo\service\BaseServiceImpl.class
+com\demo\dao\BaseDaoImpl.class
+com\demo\controller\CollegeController.class
+com\demo\service\BaseService.class
