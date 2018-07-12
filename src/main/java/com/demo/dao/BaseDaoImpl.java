@@ -6,11 +6,12 @@ import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.demo.beans.BaseBean;
 
+@SuppressWarnings("rawtypes")
 public class BaseDaoImpl implements BaseDao {
 
 	@Autowired
@@ -18,32 +19,33 @@ public class BaseDaoImpl implements BaseDao {
 	
 	public Serializable save(BaseBean bean) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
+		Transaction tx = session.beginTransaction();
 		Serializable id = session.save(bean);
-		session.getTransaction().commit();
+		tx.commit();
 		session.close();
 		return id;
 	}
 
 	public void deleteById(int id, Class className) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
+		Transaction tx = session.beginTransaction();
 		BaseBean bean = fetchById(id, className);
 		session.delete(bean);
-		session.getTransaction().commit();
+		tx.commit();
 		session.close();
 	}
 
 	public Set<BaseBean> fetchAll(Class className) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
+		@SuppressWarnings("unchecked")
 		Set<BaseBean> beans = new HashSet<BaseBean>(session.createCriteria(className).list());
+		session.close();
 		return beans;
 	}
 
+	
 	public BaseBean fetchById(Serializable id, Class className) {
 		Session session = sessionFactory.openSession();
-		session.beginTransaction();
 		BaseBean bean = (BaseBean) session.get(className, id);
 		session.close();
 		return bean;

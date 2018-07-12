@@ -1,13 +1,14 @@
 package com.demo.service;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.demo.beans.BaseBean;
 import com.demo.dao.BaseDao;
 
+@SuppressWarnings("rawtypes")
 public class BaseServiceImpl implements BaseService{
 
 	@Autowired
@@ -18,9 +19,14 @@ public class BaseServiceImpl implements BaseService{
 	}
 
 	@Override
-	public BaseBean getEntitiyById(Serializable id, Class className) {
+	public BaseBean getEntitiyById(Serializable id,  Class className) {
 		BaseBean bean = baseDao.fetchById(id, className);
 		return bean;
+	}
+
+	@Override
+	public Set<BaseBean> getAllEntitties(Class className) {
+		return baseDao.fetchAll(className);
 	}
 	
 }
