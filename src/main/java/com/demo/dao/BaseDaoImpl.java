@@ -1,5 +1,6 @@
 package com.demo.dao;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,12 +16,13 @@ public class BaseDaoImpl implements BaseDao {
 	@Autowired
 	protected SessionFactory sessionFactory;
 	
-	public void save(BaseBean bean) {
+	public Serializable save(BaseBean bean) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		session.save(bean);
+		Serializable id = session.save(bean);
 		session.getTransaction().commit();
 		session.close();
+		return id;
 	}
 
 	public void deleteById(int id, Class className) {
@@ -39,12 +41,11 @@ public class BaseDaoImpl implements BaseDao {
 		return beans;
 	}
 
-	public BaseBean fetchById(int id, Class className) {
+	public BaseBean fetchById(Serializable id, Class className) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		BaseBean bean = (BaseBean) session.get(className, id);
 		session.close();
 		return bean;
 	}
-
 }

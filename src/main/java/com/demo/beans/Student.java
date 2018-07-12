@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,8 +13,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
 @Table(name = "STUDENT")
+@XmlRootElement(name = "student")
 public class Student implements BaseBean{
 	
 	/**
@@ -25,14 +30,17 @@ public class Student implements BaseBean{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int stuId;
 	
-	@Column(name = "NAME", nullable = false)
+	@Column(name = "name", nullable = false)
+	@XmlElement(name = "name")
 	private String stuName;
 	
 	@OneToOne(cascade = CascadeType.ALL)
+	@XmlElement(name = "address")
 	private Address addr;
 	
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "stuId")
+	@XmlElement(name = "subjects")
 	private Set<Subject> subjects;
 
 	public Student() {
@@ -99,4 +107,11 @@ public class Student implements BaseBean{
 	public void setSubjects(Set<Subject> subjects) {
 		this.subjects = subjects;
 	}
+
+	@Override
+	public String toString() {
+		return "Student [stuId=" + stuId + ", stuName=" + stuName + ", addr=" + addr + ", subjects=" + subjects + "]";
+	}
+	
+	
 }

@@ -1,5 +1,7 @@
 package com.demo.service;
 
+import java.io.Serializable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -11,7 +13,14 @@ public class BaseServiceImpl implements BaseService{
 	@Autowired
 	private BaseDao baseDao;
 	
-	public void createEntity(BaseBean bean) {
-		baseDao.save(bean);
+	public Serializable createEntity(BaseBean bean) {
+		return baseDao.save(bean);
 	}
+
+	@Override
+	public BaseBean getEntitiyById(Serializable id, Class className) {
+		BaseBean bean = baseDao.fetchById(id, className);
+		return bean;
+	}
+	
 }

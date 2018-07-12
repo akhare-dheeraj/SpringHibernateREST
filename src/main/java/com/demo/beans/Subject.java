@@ -1,9 +1,16 @@
 package com.demo.beans;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
+@Table(name = "SUBJECT")
+@XmlRootElement(name = "subject")
 public class Subject implements BaseBean{
 	
 	/**
@@ -16,9 +23,11 @@ public class Subject implements BaseBean{
 	private int subId;
 	
 	@Column
+	@XmlElement(name = "name")
 	private String subName;
 	
 	@Column
+	@XmlElement(name = "author")
 	private String author;
 
 	public Subject() {

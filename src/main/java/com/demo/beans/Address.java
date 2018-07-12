@@ -1,11 +1,16 @@
 package com.demo.beans;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
 @Table(name = "ADDRESS")
+@XmlRootElement(name = "address")
 public class Address implements BaseBean{
 
 	/**
@@ -15,12 +20,15 @@ public class Address implements BaseBean{
 
 	@Id
 	@GeneratedValue
+	@XmlElement(name = "id")
 	private int addrId;
 	
 	@Column(name = "city")
+	@XmlElement(name = "city")
 	private String city;
 	
 	@Column(name = "state")
+	@XmlElement(name = "state")
 	private String state;
 
 	public Address(String city, String state) {
