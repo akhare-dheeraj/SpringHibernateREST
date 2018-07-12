@@ -12,4 +12,6 @@ public interface BaseDao {
 	public void deleteById(int id,  Class className);
 	public Set<BaseBean> fetchAll(Class className);
 	public BaseBean fetchById(Serializable id, Class className);
+	public BaseBean update(BaseBean bean);
+	public boolean delete(Serializable id, Class className);
 }

@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.Set;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.demo.beans.BaseBean;
 import com.demo.beans.Student;
 import com.demo.service.BaseService;
+import com.google.gson.JsonObject;
 
 @Path("/student")
 public class StudentController {
@@ -55,14 +58,38 @@ public class StudentController {
 			return Response.status(Status.NOT_FOUND).build();
 		return Response.ok(stu).build();
 	}
-	
+
 	@Path("/get")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllStudents() {
 		Set<BaseBean> students = service.getAllEntitties(Student.class);
-		if(students==null)
+		if (students == null)
 			return Response.status(Status.NOT_FOUND).build();
 		return Response.ok(students).build();
 	}
+
+	@PUT
+	@Path("/update")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response updateStudent(Student student) {
+		try {
+		service.updateBean(student);
+		} catch(Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+		}
+		return Response.ok(student).build();
+	}
+	
+	@DELETE
+	@Path("/delete/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteById(@PathParam("id") Integer id) {
+		boolean status = service.deleteBean(id, Student.class);
+		JsonObject res = new JsonObject();
+		res.addProperty("status", status);
+		return Response.ok(res.toString()).build();
+	}
+	
 }

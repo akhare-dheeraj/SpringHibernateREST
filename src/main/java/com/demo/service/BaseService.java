@@ -13,4 +13,8 @@ public interface BaseService {
 	public BaseBean getEntitiyById(Serializable id, Class className);
 	
 	public Set<BaseBean> getAllEntitties(Class className);
+	
+	public BaseBean updateBean(BaseBean bean);
+	
+	public boolean deleteBean(Serializable id, Class className);
 }

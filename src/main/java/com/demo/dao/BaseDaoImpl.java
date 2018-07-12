@@ -50,4 +50,30 @@ public class BaseDaoImpl implements BaseDao {
 		session.close();
 		return bean;
 	}
+
+	@Override
+	public BaseBean update(BaseBean bean) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.update(bean);
+		tx.commit();
+		session.close();
+		return bean;
+	}
+
+	@Override
+	public boolean delete(Serializable id, Class className) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		try {
+		BaseBean bean = (BaseBean) session.load(className, id);
+		session.delete(bean);
+		tx.commit();
+		session.close();
+		} catch(Exception e) {
+			session.close();
+			return false;
+		}
+		return true;
+	}
 }

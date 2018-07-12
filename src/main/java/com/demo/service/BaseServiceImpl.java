@@ -28,5 +28,16 @@ public class BaseServiceImpl implements BaseService{
 	public Set<BaseBean> getAllEntitties(Class className) {
 		return baseDao.fetchAll(className);
 	}
+
+	@Override
+	public BaseBean updateBean(BaseBean bean) {
+		return baseDao.update(bean);
+	}
+
+	@Override
+	public boolean deleteBean(Serializable id, Class className) {
+		return baseDao.delete(id, className);
+	}
+	
 	
 }
