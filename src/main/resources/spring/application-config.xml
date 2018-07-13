@@ -42,7 +42,7 @@
 		base-package="com.demo.controller" />
 	<context:annotation-config />
 
-	<bean class="com.demo.dao.BaseDaoImpl" />
+	<bean id="baseDao" class="com.demo.dao.BaseDaoImpl" />
 	<bean class="com.demo.service.BaseServiceImpl" />
 
 	<bean id="strongEncryptor"
@@ -67,4 +67,8 @@
 			<ref bean="strongEncryptor" />
 		</property>
 	</bean>
+	
+	<bean id="userDao" class="com.demo.dao.UserDao" />
+	<bean id="auth" class="com.demo.auth.authenticator.Authenticator" />
+	
 </beans>
