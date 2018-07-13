@@ -14,6 +14,7 @@ import org.hibernate.annotations.TypeDef;
 import org.jasypt.hibernate4.type.EncryptedStringType;
 
 import com.demo.constants.Role;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @TypeDef(typeClass = EncryptedStringType.class, name = "encryptedPwd", parameters = {
 		@Parameter(name = "encryptorRegisteredName", value = "myHibernateStringEncryptor") })
@@ -21,6 +22,7 @@ import com.demo.constants.Role;
 @Table(name = "USERS")
 @Entity
 @XmlRootElement(name = "user")
+@JsonIgnoreProperties(value= {"password"}, allowSetters=true)
 public class User implements BaseBean {
 
 	/**
@@ -71,7 +73,7 @@ public class User implements BaseBean {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
+	
 	public String getPassword() {
 		return password;
 	}
