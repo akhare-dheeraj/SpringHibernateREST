@@ -1,7 +1,6 @@
 package com.demo.controller;
 
-import java.io.Serializable;
-
+import javax.annotation.security.DenyAll;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -45,5 +44,13 @@ public class UserController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getUser(@PathParam("id") Integer id) {
 		return Response.ok(service.getEntitiyById(id, User.class)).build();
+	}
+	
+	@DenyAll
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/all")
+	public Response getAllUsers() {
+		return Response.ok(service.getAllEntitties(User.class)).build();
 	}
 }
